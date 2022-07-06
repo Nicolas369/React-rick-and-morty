@@ -1,30 +1,92 @@
+import { useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import cover from '../../assets/images/portada.png';
-import portal from '../../assets/images/portal.png';
 
 function Home() {
+    const [queryCode, setQueryCode] = useState(``); 
+    const index = useRef({array: 0, line: 0});
+    const queryArray = useRef([
+        "",
+        "    query {",
+        "        character(id: 0) {",
+        "            id",
+        "            name",
+        "            status",
+        "            species",
+        "            type",
+        "            gender",
+        "            origin {",
+        "                name",
+        "                type",
+        "                dimension",
+        "            }",
+        "            location {",
+        "                name",
+        "                dimension",
+        "                type",
+        "                id",
+        "            }",
+        "            image",
+        "            created",
+        "            episode {",
+        "                name",
+        "                id",
+        "            }",
+        "        }",
+        "    }",
+        " "
+    ]);
+        
+    const typing = () => {
+        if (queryArray.current.length > index.current.array) {
+            const line = queryArray.current[index.current.array];
+            if (line.length > 0 && (line.length) > index.current.line) {
+                let blackSpaces = '';
+                let letter = line.split('')[index.current.line];
+                while (letter === ' ' && line.split('')[index.current.line]) {
+                    blackSpaces += letter;
+                    index.current.line++;
+                    if (line.split('')[index.current.line]) {
+                        letter = line.split('')[index.current.line]
+                    }
+                }
+                setQueryCode(queryCode + (blackSpaces + letter));
+                index.current.line++;
+                console.log(letter);
+            }
+            else {
+                setQueryCode(queryCode + '\n');
+                index.current.array++;
+                index.current.line = 0;
+            } 
+        }
+    }
+
+    useEffect(() => {
+        setTimeout(() => typing(), 100);
+    }, [queryCode]);
+
     return ( 
-        <div style={styles.containerOrbit}>
+        <div style={styles.container}>
             <Container>
-                <OrbitContainer>
-                    <OrbitBig>
-                        <PortalImage src={portal}/>
-                    </OrbitBig>
-                    <OrbitSmall>
-                        <PortalImage margin={'-35'} src={portal}/>
-                    </OrbitSmall>
-                </OrbitContainer>
+                <CodeContainer left={false} >
+                    <QueryCode>
+                        <code>
+                            {queryCode}<Loading>▮</Loading> 
+                        </code>
+                    </QueryCode>
+
+                </CodeContainer>
                 
                 <CoverImage src={cover}/>
                 
-                <OrbitContainer>
-                    <OrbitBig>
-                        <PortalImage src={portal}/>
-                    </OrbitBig>
-                    <OrbitSmall>
-                        <PortalImage margin={'-35'} src={portal}/>
-                    </OrbitSmall>
-                </OrbitContainer>
+                <CodeContainer left={true}>
+                    <QueryCode>
+                        <code>
+                            {queryCode}<Loading>▮</Loading> 
+                        </code>
+                    </QueryCode>
+                </CodeContainer>
             </Container>
         </div>
     );
@@ -32,11 +94,8 @@ function Home() {
 
 export default Home;
 
-
-
-
 const styles = {
-    containerOrbit: { 
+    container: { 
         height: '85vh',
         display: 'flex',
         justifyContent: 'center',
@@ -57,46 +116,28 @@ const CoverImage = styled.img`
     height: 85vh;
     width: auto;
 `;
-const PortalImage = styled.img`
-    height: 30vh;
-    width: auto;
-    margin: ${props => props.margin}px;
-`;
 
-const animation1 = keyframes`
-    0%{transform: rotate(0deg);}
-    100%{transform: rotate(360deg);}
-`;
-const animation2 = keyframes`
-    0%{transform: rotate(0deg);}
-    100%{transform: rotate(-360deg);}
-`;
-
-const OrbitContainer = styled.div`
+const CodeContainer = styled.div`
     width: 160vh;
     height: 250vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: ${props => props.left ? 'left' : 'right'};;
     position: relative;
+    
 `;
 
-const OrbitBig = styled.div`
-    height: 110vh;
-    width: 110vh;
-    border-radius: 50%;
-    margin-right: 150px;
-    margin-left: 150px;
-    border: 3px solid #50FF00;  
-    animation: ${animation1} 7s linear infinite;
+const QueryCode = styled.pre`
+    margin: 12vw;
+    font-size: 1rem;
 `;
-const OrbitSmall = styled.div`
-    height: 55vh;
-    width: 55vh;
-    border-radius: 50%;
-    border: 3px solid #50FF00;
-    position: absolute;
-    display: flex;
-    justify-content: space-between;
-    animation: ${animation2} 3s linear infinite;
+
+const animation = keyframes`
+    0% {opacity: 0; }
+    100% {opacity: 1;}
+`;
+
+const Loading = styled.span`
+    font-size: 25px;
+    animation: ${animation} 0.5s linear infinite;
 `;
