@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { useLocation } from "@tanstack/react-location";
+import { useState } from 'react';
+import { useLocation } from '@tanstack/react-location';
 import {
   useCharactersQuery,
   useEpisodesQuery,
   useLocationsQuery,
   useCharacterQuery,
-} from "../state/queriesSelector";
-import Graphql from "../assets/Graphql";
-import styled from "styled-components";
+} from '../state/queriesSelector';
+import Graphql from '../assets/Graphql';
+import styled from 'styled-components';
 
 function QueryPanel() {
   const [open, setOpen] = useState(false);
@@ -20,12 +20,12 @@ function QueryPanel() {
     character: useCharacterQuery(),
   };
 
-  const currentQuery = query[location.current.href.split("/")[1]];
+  const currentQuery = query[location.current.href.split('/')[1]];
   let HTMLquery;
   let variables;
 
-  if (location.current.href.split("/")[1] === "character") {
-    variables = { id: location.current.href.split("/").pop() };
+  if (location.current.href.split('/')[1] === 'character') {
+    variables = { id: location.current.href.split('/').pop() };
     HTMLquery = currentQuery;
   } else {
     HTMLquery = currentQuery.query;
@@ -33,17 +33,20 @@ function QueryPanel() {
   }
 
   const HTMLvariables = (variablesObject) => {
-    let variableObj = "{\n";
-    let attributes = "";
+    let variableObj = '{\n';
+    let attributes = '';
 
     for (let key in variablesObject) {
-      if (typeof variablesObject[key] === "object") {
-        let attributesSubObj = "{ \n";
+      if (Array.isArray(variablesObject[key])) {
+        const array = variablesObject[key].map((val) => '\n' + val);
+        attributes += `${key}: [${array}\n]\n`;
+      } else if (typeof variablesObject[key] === 'object') {
+        let attributesSubObj = '{ \n';
         let object = variablesObject[key];
         for (let keyWord in object) {
           attributesSubObj += `${keyWord}: ${object[keyWord]}\n`;
         }
-        attributesSubObj += "}";
+        attributesSubObj += '}';
         attributes += `${key}: ${attributesSubObj}\n`;
       } else {
         attributes += `${key}: ${variablesObject[key]} \n`;
@@ -51,15 +54,15 @@ function QueryPanel() {
     }
 
     variableObj += attributes;
-    variableObj += "}";
+    variableObj += '}';
 
-    let variables = variableObj.split("\n");
+    let variables = variableObj.split('\n');
     let tabulators = 0;
-    let space = "   ";
+    let space = '   ';
     variables = variables.map((line) => {
-      let beginning = "";
+      let beginning = '';
 
-      if (line.includes("}")) {
+      if (line.includes('}') || line.includes(']')) {
         tabulators--;
       }
 
@@ -67,13 +70,13 @@ function QueryPanel() {
         beginning += space;
       }
 
-      if (line.includes("{")) {
+      if (line.includes('{') || line.includes('[')) {
         tabulators++;
       }
 
       return (beginning += line);
     });
-    return variables.join("\n");
+    return variables.join('\n');
   };
 
   const openQueryPanel = () => setOpen(!open);
@@ -116,12 +119,12 @@ const Panel = styled.div`
   font-weight: 700;
   background-color: #003300;
 
-  padding: ${(porps) => (porps.isOpen ? "25px" : "7px")};
-  width: ${(props) => (props.isOpen ? "fit-content" : "75px")};
-  height: ${(props) => (props.isOpen ? "fit-content" : "75px")};
-  max-height: ${(props) => (props.isOpen ? "95vh" : "75px")};
-  max-width: ${(props) => (props.isOpen ? "85vw" : "75px")};
-  border-radius: ${(props) => (props.isOpen ? "25px" : "50%")};
+  padding: ${(porps) => (porps.isOpen ? '25px' : '7px')};
+  width: ${(props) => (props.isOpen ? 'fit-content' : '75px')};
+  height: ${(props) => (props.isOpen ? 'fit-content' : '75px')};
+  max-height: ${(props) => (props.isOpen ? '95vh' : '75px')};
+  max-width: ${(props) => (props.isOpen ? '85vw' : '75px')};
+  border-radius: ${(props) => (props.isOpen ? '25px' : '50%')};
   transition-property: max-height, max-width;
   transition-duration: 0.7s, 1.5s;
   ${(props) =>
@@ -129,7 +132,7 @@ const Panel = styled.div`
       ? `
         padding-right: 50px;
         `
-      : ""}
+      : ''}
 `;
 
 const Container = styled.div`
