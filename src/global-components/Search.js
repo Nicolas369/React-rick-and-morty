@@ -46,9 +46,11 @@ function Search() {
     const cleanInput = new CleanInput();
 
   const search = () => {
-    dispatch(setFilterForSearchCharacters({ filter: filter }));
-    dispatch(searchCharacters());
-    location.history.push('/characters');
+    if (!!Object.keys(filter).length){
+      dispatch(setFilterForSearchCharacters({ filter: filter }));
+      dispatch(searchCharacters());
+      location.history.push('/characters');
+    }
   };
 
     useEffect(()=>{
