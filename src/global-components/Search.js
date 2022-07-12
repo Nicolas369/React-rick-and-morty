@@ -112,7 +112,7 @@ function Search() {
                   value="alive"
                   onChange={(e) => addCheckValue(e, statusForm, "status")}
                 />
-                <label for="interesado">Alive</label>
+                <label>Alive</label>
               </RadioOption>
               <RadioOption>
                 <Checkbox
@@ -120,7 +120,7 @@ function Search() {
                   value="dead"
                   onChange={(e) => addCheckValue(e, statusForm, "status")}
                 />
-                <label for="interesado">Dead</label>
+                <label>Dead</label>
               </RadioOption>
               <RadioOption>
                 <Checkbox
@@ -128,7 +128,7 @@ function Search() {
                   value="unknown"
                   onChange={(e) => addCheckValue(e, statusForm, "status")}
                 />
-                <label for="interesado">Unknown</label>
+                <label>Unknown</label>
               </RadioOption>
             </RadioForm>
 
@@ -140,7 +140,7 @@ function Search() {
                   value="male"
                   onChange={(e) => addCheckValue(e, genderForm, "gender")}
                 />
-                <label for="interesado">Male</label>
+                <label>Male</label>
               </RadioOption>
               <RadioOption>
                 <Checkbox
@@ -148,7 +148,7 @@ function Search() {
                   value="female"
                   onChange={(e) => addCheckValue(e, genderForm, "gender")}
                 />
-                <label for="interesado">Female</label>
+                <label>Female</label>
               </RadioOption>
               <RadioOption>
                 <Checkbox
@@ -156,7 +156,7 @@ function Search() {
                   value="unknown"
                   onChange={(e) => addCheckValue(e, genderForm, "gender")}
                 />
-                <label for="interesado">Unknown</label>
+                <label>Unknown</label>
               </RadioOption>
             </RadioForm>
 
@@ -168,7 +168,7 @@ function Search() {
                   value="Human"
                   onChange={(e) => addCheckValue(e, speciesForm, "species")}
                 />
-                <label for="interesado">Human</label>
+                <label>Human</label>
               </RadioOption>
               <RadioOption>
                 <Checkbox
@@ -176,7 +176,7 @@ function Search() {
                   value="Humanoid"
                   onChange={(e) => addCheckValue(e, speciesForm, "species")}
                 />
-                <label for="interesado">Humanoid</label>
+                <label>Humanoid</label>
               </RadioOption>
               <RadioOption>
                 <Checkbox
@@ -184,7 +184,7 @@ function Search() {
                   value="alien"
                   onChange={(e) => addCheckValue(e, speciesForm, "species")}
                 />
-                <label for="interesado">Alien</label>
+                <label>Alien</label>
               </RadioOption>
               <RadioOption>
                 <Checkbox
@@ -192,7 +192,7 @@ function Search() {
                   value="poopybutthole"
                   onChange={(e) => addCheckValue(e, speciesForm, "species")}
                 />
-                <label for="interesado">Poopybutthole</label>
+                <label>Poopybutthole</label>
               </RadioOption>
               <RadioOption>
                 <Checkbox
@@ -200,7 +200,7 @@ function Search() {
                   value="mythological creature"
                   onChange={(e) => addCheckValue(e, speciesForm, "species")}
                 />
-                <label for="interesado">Mythological Creature</label>
+                <label>Mythological Creature</label>
               </RadioOption>
               <RadioOption>
                 <Checkbox
@@ -208,7 +208,7 @@ function Search() {
                   value="robot"
                   onChange={(e) => addCheckValue(e, speciesForm, "species")}
                 />
-                <label for="interesado">Robot</label>
+                <label>Robot</label>
               </RadioOption>
               <RadioOption>
                 <Checkbox
@@ -216,7 +216,7 @@ function Search() {
                   value="cronenberg"
                   onChange={(e) => addCheckValue(e, speciesForm, "species")}
                 />
-                <label for="interesado">Cronenberg</label>
+                <label>Cronenberg</label>
               </RadioOption>
               <RadioOption>
                 <Checkbox
@@ -224,7 +224,7 @@ function Search() {
                   value="disease"
                   onChange={(e) => addCheckValue(e, speciesForm, "species")}
                 />
-                <label for="interesado">Disease</label>
+                <label>Disease</label>
               </RadioOption>
               <RadioOption>
                 <Checkbox
@@ -232,7 +232,7 @@ function Search() {
                   value="unknown"
                   onChange={(e) => addCheckValue(e, speciesForm, "species")}
                 />
-                <label for="interesado">Unknown</label>
+                <label>Unknown</label>
               </RadioOption>
             </RadioForm>
           </div>

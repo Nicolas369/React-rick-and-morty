@@ -11,7 +11,6 @@ function Episodes() {
     const dispatch = useDispatch();
 
     const { error, loading, data } = useQuery(gql`${query.query}`, { variables: query.variables });
-    console.log(query.variables)
      
     if (loading) return <Message> Loading...<Loading>▮</Loading></Message>
 

@@ -52,7 +52,6 @@ function Home() {
                 }
                 setQueryCode(queryCode + (blackSpaces + letter));
                 index.current.line++;
-                console.log(letter);
             }
             else {
                 setQueryCode(queryCode + '\n');

@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { 
-    gotToPage, 
-    applyFilter, 
-    changeId, 
-    cleanQuery, 
     makeQueryForCharactersById,
     resetCharacterQuery,
     getCharactersSearchQuery
