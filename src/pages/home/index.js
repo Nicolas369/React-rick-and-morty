@@ -7,8 +7,8 @@ function Home() {
     const index = useRef({array: 0, line: 0});
     const queryArray = useRef([
         "",
-        "    query {",
-        "        character(id: 0) {",
+        "    query GraphQL ($id: ID = 1) {",
+        "        character (id: $id) {",
         "            id",
         "            name",
         "            status",
@@ -19,6 +19,7 @@ function Home() {
         "                name",
         "                type",
         "                dimension",
+        "            ",
         "            }",
         "            location {",
         "                name",
@@ -33,8 +34,7 @@ function Home() {
         "                id",
         "            }",
         "        }",
-        "    }",
-        " "
+        "    }"
     ]);
         
     const typing = () => {
@@ -127,7 +127,7 @@ const CodeContainer = styled.div`
 `;
 
 const QueryCode = styled.pre`
-    margin: 12vw;
+    margin: 5vw;
     font-size: 1rem;
 `;
 

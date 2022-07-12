@@ -49,9 +49,6 @@ const Scrollbar = styled.section`
   height: 85vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  /* width: auto; */
-  /* display: flex;
-  align-items:center; */
   
   &::-webkit-scrollbar {
     width: 10px;
