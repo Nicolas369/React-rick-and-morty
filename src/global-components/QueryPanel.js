@@ -21,16 +21,8 @@ function QueryPanel() {
   };
 
   const currentQuery = query[location.current.href.split('/')[1]];
-  let HTMLquery;
-  let variables;
-
-  if (location.current.href.split('/')[1] === 'character') {
-    variables = { id: location.current.href.split('/').pop() };
-    HTMLquery = currentQuery;
-  } else {
-    HTMLquery = currentQuery.query;
-    variables = currentQuery.variables;
-  }
+  let HTMLquery = currentQuery.query;
+  let variables = currentQuery.variables;
 
   const HTMLvariables = (variablesObject) => {
     let variableObj = '{\n';
@@ -59,6 +51,7 @@ function QueryPanel() {
     let variables = variableObj.split('\n');
     let tabulators = 0;
     let space = '   ';
+
     variables = variables.map((line) => {
       let beginning = '';
 
@@ -76,6 +69,7 @@ function QueryPanel() {
 
       return (beginning += line);
     });
+
     return variables.join('\n');
   };
 

@@ -14,6 +14,7 @@ const Characters = () => {
 
     const query = useCharactersQuery();
     const dispatch = useDispatch(); 
+    
     const {error, loading, data } = useQuery(gql`${query.query}`, { variables: query.variables });
 
     useEffect(() => {

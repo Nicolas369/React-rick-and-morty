@@ -1,6 +1,15 @@
 import { useSelector } from "react-redux";
+import { useLocation } from "@tanstack/react-location";
 
-export const useCharacterQuery = () => useSelector(state => state.queries.characterQuery);
+export const useCharacterQuery = () => {
+    const queries = useSelector(state => state.queries);
+    const location = useLocation();
+
+    return {
+        query: queries.characterQuery,
+        variables: { id: location.current.href.split('/').pop() },
+    }
+};
 
 export const useCharactersQuery = () => useSelector( state => {
     return {
