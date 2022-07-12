@@ -2,16 +2,12 @@ import { Link, useMatch } from '@tanstack/react-location';
 import styled, { keyframes } from "styled-components";
 import { useQuery, gql } from '@apollo/client';
 import { useCharacterQuery } from '../../state/queriesSelector';
-import { useDispatch } from 'react-redux';
-import { setCharacterQuery } from '../../state/queriesSlice';
 
 function Character() {
     const { characterId } = useMatch().params;
-    const dispatch = useDispatch();
     const query = useCharacterQuery();
-    dispatch(setCharacterQuery({ id: characterId}));
 
-    const {error, loading, data} = useQuery(gql`${query}`);
+    const {error, loading, data} = useQuery(gql`${query}`, { variables: { id: parseInt(characterId) } });
 
     if (loading) return <Message> Loading...<Loading>▮</Loading> </Message>
 

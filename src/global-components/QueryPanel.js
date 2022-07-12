@@ -20,7 +20,61 @@ function QueryPanel() {
         character: useCharacterQuery(),
     }
 
-    const HTMLquery = query[location.current.href.split('/')[1]]
+    const currentQuery =  query[location.current.href.split('/')[1]]
+    const HTMLquery = currentQuery.query;
+
+    const HTMLvariables = (variablesObject) => {
+        let variableObj = '{\n';
+        let attributes = '';
+
+        for(let key in variablesObject) {
+            if (typeof variablesObject[key] === 'object') {
+
+                let attributesSubObj = '{ \n';
+                let object = variablesObject[key]
+                for(let keyWord in object) {
+                    attributesSubObj += `${keyWord}: ${object[keyWord]}\n`;
+                }
+                attributesSubObj += '}';
+                attributes += `${key}: ${attributesSubObj}\n`;
+            }
+            else {
+                attributes += `${key}: ${variablesObject[key]} \n`;   
+            }
+        }
+
+        variableObj += attributes;
+        variableObj += '}';
+
+        console.log(variableObj)
+
+        let variables = variableObj.split('\n');
+        let tabulators = 0;
+        let space = '   ';
+        variables = variables.map( line => {
+            let beginning = '';
+            
+            if(line.includes('}')) {
+                tabulators--;
+            } 
+
+            for (let n = 0; n <= tabulators; n++) {
+                beginning += space
+            }
+        
+            if (line.includes('{')) {
+                tabulators++;
+            }
+
+            return beginning += line;
+        });
+        return variables.join('\n');
+    }
+    
+    
+    
+    
+    
     const openQueryPanel = () => setOpen(!open);
 
     return ( 
@@ -28,7 +82,13 @@ function QueryPanel() {
 
             <Panel onClick={openQueryPanel} isOpen={open} >
                 { open 
-                    ? <Query><code>{ HTMLquery }</code></Query>
+                    ? <>
+                        <Query><code>{ HTMLquery }</code></Query>
+                        <VariablesContainer>
+                            <h1>Variables:</h1>
+                            <Query><code>{ HTMLvariables(currentQuery.variables) }</code></Query>
+                        </VariablesContainer>
+                    </>
                     : <Graphql />
                 }
             </Panel>
@@ -81,4 +141,21 @@ const Container = styled.div`
     right: 0;
     margin-right: 3.5vw;
     margin-bottom: 5vh;
+`;
+
+const VariablesContainer = styled.div`
+    padding: 15px;
+    margin: 20px;
+    border: 3px solid #008f11;
+    max-height: 50vh;
+    height: auto;   
+    overflow-y: scroll;
+   
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color: #008F11;
+    }
+
 `;

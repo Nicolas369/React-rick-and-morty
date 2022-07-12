@@ -1,5 +1,6 @@
 import { useEpisodesQuery } from "../../state/queriesSelector";
-import { goToEpisodesPage, getCharactersById } from "../../state/queriesSlice";
+import { getCharactersById } from "../../state/queriesSlice";
+import { setCharactersIds, setEpisodesPage } from "../../state/variablesSlice";
 import styled, { keyframes } from "styled-components";
 import { useQuery, gql } from "@apollo/client";
 import { useDispatch } from 'react-redux'
@@ -9,8 +10,8 @@ function Episodes() {
     const query = useEpisodesQuery();
     const dispatch = useDispatch();
 
-    const { error, loading, data } = useQuery(gql`${query}`);
-
+    const { error, loading, data } = useQuery(gql`${query.query}`, { variables: query.variables });
+    console.log(query.variables)
      
     if (loading) return <Message> Loading...<Loading>▮</Loading></Message>
 
@@ -23,11 +24,12 @@ function Episodes() {
 
     const goToPage = (page) => {
         const payload = { page: page };
-        dispatch(goToEpisodesPage(payload));    
+        dispatch(setEpisodesPage(payload));    
     }
 
     const getCharacters = (ids) => {
-        dispatch(getCharactersById({ ids: ids.map(character => character.id) }));
+        dispatch(setCharactersIds({ ids: ids.map(character => character.id) }));
+        dispatch(getCharactersById());
     }
 
     return ( 

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import { setCharactersIds } from "../../../state/variablesSlice";
 import { getCharactersById } from "../../../state/queriesSlice";
 import { Link } from "@tanstack/react-location";
 
@@ -7,7 +8,8 @@ function LocationCard({ location }) {
   const dispatch = useDispatch();
 
   const redirectToCharacters = (ids) => {
-    dispatch(getCharactersById({ ids: ids.map((resident) => resident.id) }));
+    dispatch(setCharactersIds({ ids: ids.map(resident => resident.id) }));
+    dispatch(getCharactersById());
   };
 
   const getDate = () => {

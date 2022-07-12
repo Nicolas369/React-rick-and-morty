@@ -5,14 +5,15 @@ import {
     changeId, 
     cleanQuery, 
     makeQueryForCharactersById,
-    resetCharacterQuery
-} from "./utils/componse-queries";
+    resetCharacterQuery,
+    getCharactersSearchQuery
+} from "./utils/componse-queries";  
 
 
 const initialState = {
     characterQuery: `
-    query {
-        character(id: 0) {
+    query GetCharacter($id: ID = 1) {
+        character(id: $id) {
             id
             name
             status
@@ -40,10 +41,8 @@ const initialState = {
         }
     }`,
     charactersQuery: `
-    query {
-        characters(
-            page: 1
-        ) {
+    query GetCharacters($page: Int = 1) {
+        characters(page: $page) {
             info {
                 pages
                 next
@@ -58,10 +57,8 @@ const initialState = {
         }
     }`,
     locationsQuery:  `
-    query {
-        locations(
-            page: 1
-        ) {
+    query GetLocations($page: Int = 1) {
+        locations(page: $page) {
             info {
                 pages
                 next
@@ -79,10 +76,8 @@ const initialState = {
         }
     }`, 
     episodesQuery:  `
-    query {
-        episodes(
-            page: 1
-        ) {
+    query GetEpisodes($page: Int = 1) {
+        episodes(page: $page) {
             info {
                 pages
                 next
@@ -118,26 +113,11 @@ const queriesSlice = createSlice({
         getCharacters: (state) => {
             state.charactersQuery = resetCharacterQuery();
         },   
-        setCharacterQuery: (state, { payload }) => {
-            state.characterQuery = changeId(state.characterQuery, payload.id);
-        },      
-        goToCharactersPage: (state, { payload }) => {
-            state.charactersQuery = gotToPage(state.charactersQuery, payload.page);
+        searchCharacters: (state) => {
+            state.charactersQuery = getCharactersSearchQuery();
         },
-        goToLocationsPage: (state, { payload }) => {
-            state.locationsQuery = gotToPage(state.locationsQuery, payload.page);
-        },
-        goToEpisodesPage: (state, { payload }) => {
-            state.episodesQuery = gotToPage(state.episodesQuery, payload.page);
-        },
-        searchCharacters: (state, { payload }) => {
-            state.charactersQuery = applyFilter(state.charactersQuery, payload.filter)
-        },
-        cleanSearch: (state) => {
-            state.charactersQuery = cleanQuery(state.charactersQuery)
-        },
-        getCharactersById: (state, { payload }) => {
-            state.charactersQuery = makeQueryForCharactersById(payload.ids);
+        getCharactersById: (state) => {
+            state.charactersQuery = makeQueryForCharactersById();
         }
     }
 });
@@ -149,9 +129,6 @@ export const {
     setLocationsQuery, 
     setEpisodesQuery,
     getCharacters,
-    goToCharactersPage,
-    goToLocationsPage,
-    goToEpisodesPage,
     searchCharacters,
     cleanSearch,
     getCharactersById,

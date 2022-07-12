@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
-import { searchCharacters, cleanSearch } from "../state/queriesSlice";
+import { searchCharacters, getCharacters } from "../state/queriesSlice";
+import { setFilterForSearchCharacters, resetCharactersVariables } from "../state/variablesSlice";
 import { useDispatch } from "react-redux/es/exports";
 import styled from "styled-components";
 import ExpansionPanel from "./ExpansionPanel";
@@ -45,20 +46,22 @@ function Search() {
     const cleanInput = new CleanInput();
 
   const search = () => {
-    dispatch(searchCharacters({ filter: filter }));
+    dispatch(setFilterForSearchCharacters({ filter: filter }));
+    dispatch(searchCharacters());
     location.history.push('/characters');
   };
 
     useEffect(()=>{
-        return () => {
-            cleanInput.unsubscribeAll();
-        }
+      return () => {
+        cleanInput.unsubscribeAll();
+      }
     }, []);
 
   const removeSearch = () => {
-    dispatch(cleanSearch());
     setFilter({});
     cleanInput.next();
+    dispatch(getCharacters());
+    dispatch(resetCharactersVariables());
     [statusForm, speciesForm, genderForm].forEach((form) => {
       [...form.current.children].forEach(
         (val) => (val.firstChild.checked = false)

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getCharacters } from '../state/queriesSlice';
+import { setCharactersPage, resetCharactersVariables } from '../state/variablesSlice';
 import { Link } from "@tanstack/react-location";
 import styled from "styled-components";
 import Search from "./Search";
@@ -11,7 +12,11 @@ function Navbar() {
 
   const openSearch = () => setSearchPanel(!searchPanel);
 
-  const resetCharacterQuery = () => dispatch(getCharacters());
+  const resetCharacterQuery = () => {
+    dispatch(resetCharactersVariables());
+    dispatch(setCharactersPage({ page: 1 }));
+    dispatch(getCharacters());
+  }
 
   return (
     <StyledNavbar>

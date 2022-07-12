@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useQuery, gql } from "@apollo/client";
 import { useCharactersQuery } from "../../state/queriesSelector";
-import { goToCharactersPage } from "../../state/queriesSlice";
+import { setCharactersPage } from "../../state/variablesSlice";
 import styled, { keyframes } from "styled-components";
 import CharacterCard from './components/CharacterCard'
 
-
 const Characters = () => {
-
     const [characters, setCharacters] = useState([]);
     const [pages, setPages] = useState(undefined);
     const [nextPage, setNextPage] = useState(undefined);
@@ -16,8 +14,8 @@ const Characters = () => {
 
     const query = useCharactersQuery();
     const dispatch = useDispatch(); 
-
-    const {error, loading, data } = useQuery(gql`${query}`);
+    console.log(query.variables)
+    const {error, loading, data } = useQuery(gql`${query.query}`, { variables: query.variables });
 
     useEffect(() => {
         if ( data ) {
@@ -33,7 +31,7 @@ const Characters = () => {
     }, [data]);
 
     const goToPage = (page) => {
-        dispatch(goToCharactersPage({ page: page }));
+        dispatch(setCharactersPage({ page: page }));
     }
 
     if (loading) return <Message> Loading...<Loading>▮</Loading> </Message>
@@ -51,7 +49,7 @@ const Characters = () => {
                             disabled={!prevPage}
                             onClick={() => goToPage(prevPage)}
                         >
-                            { prevPage ? '⫷' : '✖'}
+                            { prevPage ? '⫷' : '✖' }
                         </ButtonPage>
                         <PagesCount isPages={pages}>
                             <span>{ pages && `page: ${ nextPage ? nextPage - 1 : pages} of ${ pages }` }</span>

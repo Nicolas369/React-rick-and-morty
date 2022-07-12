@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux/es/exports";
 import { useQuery, gql } from "@apollo/client";
 import styled, { keyframes } from "styled-components";
 import { useLocationsQuery } from "../../state/queriesSelector";
-import { goToLocationsPage } from "../../state/queriesSlice";
+import { setLocationsPage } from "../../state/variablesSlice";
 import LocationCard from './components/LocationCard';
 
 
@@ -10,8 +10,7 @@ function Locations() {
     const query = useLocationsQuery();
     const dispatch = useDispatch()
 
-    const { error, loading, data } = useQuery(gql`${query}`);
-
+    const { error, loading, data } = useQuery(gql`${query.query}`, { variables: query.variables });
     
     if (loading) return <Message> Loading...<Loading>▮</Loading></Message>
 
@@ -24,7 +23,7 @@ function Locations() {
 
     const goToPage = (page) => {
         const payload = { page: page };
-        dispatch(goToLocationsPage(payload));
+        dispatch(setLocationsPage(payload));
     }
 
     return ( 
