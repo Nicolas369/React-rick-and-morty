@@ -4,7 +4,7 @@
 ```
 This is an application made with React.js. It's goal is to show all the Rick & Morty characters, their episodes and planets.
 ```
-Used technology:
+Used technologies:
   > React ^18.2.0
   > GraphQL
   > Apollo Cliet
